@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResearchBook</title>
+  <!-- Google Fonts: Poppins for general text, Inter for UI elements -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+</head>
+<body class="elegant-ui light-theme"> <!-- Default to light theme -->
+  <div id="loadingSpinner" class="loading-spinner"></div> <!-- Loading spinner element -->
+  <div id="flowerContainer"></div> <!-- Container for Onam falling flowers -->
+
+  <!-- Modern Nav Bar -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <!-- Gem icon to open sidebar -->
+      <button class="menu-icon-gem" id="sidebarToggle"><i class="fas fa-gem"></i></button>
+      <a href="#" class="logo"><i class="fas fa-book-reader"></i> ResearchBook</a>
+    </div>
+    <div class="navbar-center desktop-nav">
+      <ul class="nav-menu">
+        <li><a href="#" data-section="home"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="upload.html"><i class="fas fa-upload"></i> Upload</a></li>
+        <li><a href="#" data-section="explore"><i class="fas fa-compass"></i> Explore</a></li>
+        <li><a href="#" data-section="notifications"><i class="fas fa-bell"></i> Notifications</a></li>
+        <li><a href="#" data-section="profile" id="profileLink"><i class="fas fa-user"></i> Account</a></li>
+      </ul>
+    </div>
+    <div class="navbar-right">
+      <div class="search-container desktop-nav">
+        <input type="text" id="searchInput" placeholder="Search papers, authors..." class="search-input">
+        <button class="search-button"><i class="fas fa-search"></i></button>
+      </div>
+
+      <!-- Theme Palette Dropdown -->
+      <div class="theme-palette-dropdown">
+        <button class="theme-palette-btn" id="themePaletteBtn"><i class="fas fa-palette"></i></button>
+        <div class="dropdown-content theme-options" id="themeOptions">
+          <a href="#" data-theme="light">Light Theme</a>
+          <a href="#" data-theme="dark">Dark Theme</a>
+          <a href="#" data-theme="chat-movie">Chat/Movie Theme</a>
+          <a href="#" data-theme="event">Event Theme</a>
+          <a href="#" data-theme="onam">Onam Theme</a>
+        </div>
+      </div>
+
+      <div class="profile-dropdown desktop-nav">
+        <button class="profile-btn" id="profileBtn"><img src="https://placehold.co/40x40/5c6bc0/ffffff?text=U" alt="User Profile"></button>
+        <div class="dropdown-content" id="profileDropdown">
+          <a href="#" data-section="profile">My Profile</a>
+          <a href="#">Settings</a>
+          <a href="#" id="logoutLink">Logout</a>
+        </div>
+      </div>
+      <!-- Removed the extra mobile hamburger, as the gem icon now handles main menu -->
+    </div>
+  </nav>
+
+  <!-- Mobile Bottom Navigation (Hidden by default, shown via CSS media queries) -->
+  <nav class="bottom-nav mobile-nav">
+    <a href="#" data-section="home"><i class="fas fa-home"></i><span class="nav-text">Home</span></a>
+    <a href="upload.html"><i class="fas fa-upload"></i><span class="nav-text">Upload</span></a>
+    <a href="#" data-section="explore"><i class="fas fa-compass"></i><span class="nav-text">Explore</span></a>
+    <a href="#" data-section="notifications"><i class="fas fa-bell"></i><span class="nav-text">Notifications</span></a>
+    <a href="#" data-section="profile"><i class="fas fa-user"></i><span class="nav-text">Account</span></a>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <h3>ResearchBook Menu</h3>
+      <button class="close-sidebar-btn" id="closeSidebar"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="sidebar-menu">
+      <li>
+        <h4 class="sidebar-category">🏠 Home</h4>
+        <a href="#" data-section="home">Welcome Screen</a>
+        <a href="#" data-section="highlights">Highlights (Why ResearchBook?)</a>
+      </li>
+      <li>
+        <h4 class="sidebar-category">🔍 Explore</h4>
+        <a href="#" data-section="explore">Trending Research</a>
+        <a href="#" data-section="ai-recommended">Recommended For You (AI-curated)</a>
+        <a href="#" data-section="browse-filters">Browse by Field / Institution / Author</a>
+      </li>
+      <li>
+        <h4 class="sidebar-category">⬆ Upload</h4>
+        <a href="upload.html">Upload Research Paper</a>
+        <a href="#" data-action="upload-visibility">Set Visibility & Access Level</a>
+        <a href="#" data-action="add-coauthors">Add Co-authors & Institutions</a>
+        <a href="#" data-action="ai-improve-paper">AI Assistant: Improve This Paper</a>
+        <a href="#" data-action="blockchain-seal">Blockchain Timestamp & Tamper-Proof Seal <i class="fas fa-check-circle"></i></a>
+      </li>
+      <li>
+        <h4 class="sidebar-category">🛡 Privacy & Safety</h4>
+        <a href="#" data-action="tamper-proof">Tamper-Proof Verification</a>
+        <a href="#" data-action="encryption-info">End-to-End Encryption Info</a>
+        <a href="#" data-action="phd-helpdesk">PhD Harassment & Whistleblower Helpdesk</a>
+        <a href="#" data-action="confidential-submission">Confidential Submission Option</a>
+        <a href="#" data-action="report-misuse">Report Harassment / Misuse <i class="fas fa-lock"></i></a>
+      </li>
+      <li>
+        <h4 class="sidebar-category">🧠 AI Assistant</h4>
+        <a href="#" data-action="ai-improver">Research Improver Bot</a>
+        <a href="#" data-action="ai-related">Related Work Generator</a>
+        <a href="#" data-action="ai-collaborate">Collaboration Suggestions</a>
+        <a href="#" data-action="ai-translate">Translate Abstract</a>
+        <a href="#" data-action="ai-reference">Reference Generator (APA, MLA, etc.)</a>
+      </li>
+      <li>
+        <h4 class="sidebar-category">👥 Collaborate</h4>
+        <a href="#" data-action="join-projects">Join Projects</a>
+        <a href="#" data-action="invite-collaborators">Invite Collaborators</a>
+        <a href="#" data-action="interdisciplinary-hubs">Interdisciplinary Hubs</a>
+      </li>
+      <li>
+        <h4 class="sidebar-category">📊 Dashboard</h4>
+        <a href="#" data-section="dashboard">Impact Tracker (Views, Downloads, Citations)</a>
+        <a href="#" data-action="engagement-analytics">Engagement Analytics</a>
+        <a href="#" data-action="follower-count">Follower Count</a>
+      </li>
+      <li>
+        <h4 class="sidebar-category">🧾 My Profile</h4>
+        <a href="#" data-section="profile">My Research</a>
+        <a href="#" data-action="my-collaborators">My Collaborators</a>
+        <a href="#" data-action="certificates">Certificates & Credentials</a>
+        <a href="#" data-action="theme-customization">Theme & UI Customization</a>
+      </li>
+      <li>
+        <h4 class="sidebar-category">🎓 Institutions</h4>
+        <a href="#" data-section="institutions">Top Institutions List</a>
+        <a href="#" data-action="your-college-page">Your College / University Page</a>
+        <a href="#" data-action="verified-clubs">Verified Clubs / Departments / IEDC Logos</a>
+      </li>
+      <li>
+        <h4 class="sidebar-category">📣 Announcements & Events</h4>
+        <a href="#" data-section="announcements">Research Competitions</a>
+        <a href="#" data-action="call-for-papers">Call for Papers</a>
+        <a href="#" data-action="hackathons">Hackathons / Seminars / Webinars</a>
+      </li>
+      <li>
+        <h4 class="sidebar-category">⚙ Settings</h4>
+        <a href="#" data-action="settings-theme">Theme</a>
+        <a href="#" data-action="settings-language">Language</a>
+        <a href="#" data-action="notification-settings">Notification Settings</a>
+        <a href="#" data-action="account-security">Account & Security</a>
+        <a href="#" id="sidebarLogoutLink">Logout</a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main content sections -->
+  <main id="mainContent">
+    <!-- Home Section (existing) -->
+    <section id="home" class="content-section active">
+      <header class="hero">
+        <h1>Publish. Discover. Track.</h1>
+        <p>Join 291 million academics using ResearchBook to accelerate their work.</p>
+        <a href="#trending-papers" class="cta-btn">Explore Now <i class="fas fa-arrow-down"></i></a>
+      </header>
+
+      <section class="impact-cards">
+        <div class="card">📈 Track Your Impact</div>
+        <div class="card">🔍 Discover New Research</div>
+        <div class="card">📝 Publish Your Work</div>
+      </section>
+
+      <!-- Trending Papers Carousel (existing) -->
+      <section id="trending-papers" class="carousel-section">
+        <h2><i class="fas fa-fire"></i> Trending Papers</h2>
+        <div class="carousel-wrapper">
+          <button class="carousel-arrow left" id="trending-left"><i class="fas fa-chevron-left"></i></button>
+          <div class="carousel-container" id="trendingPapersCarousel">
+            <!-- Example Paper Cards -->
+            <div class="paper-card">
+              <h3>The Future of AI in Healthcare</h3>
+              <p>Author: Dr. A. Sharma</p>
+              <p class="institution-badge"><img src="https://placehold.co/20x20/000000/ffffff?text=IIT" alt="IIT Logo"> IIT Delhi</p>
+              <div class="paper-actions">
+                <button class="action-btn like-btn"><i class="fas fa-heart"></i> <span class="like-count">1.2K</span></button>
+                <button class="action-btn bookmark-btn"><i class="fas fa-bookmark"></i></button>
+                <button class="action-btn share-btn"><i class="fas fa-share-alt"></i></button>
+              </div>
+              <div class="paper-comments">
+                <p><strong>Comments:</strong> "Insightful analysis!"</p>
+              </div>
+            </div>
+            <div class="paper-card">
+              <h3>Quantum Computing Breakthroughs</h3>
+              <p>Author: Prof. B. Singh</p>
+              <p class="institution-badge"><img src="https://placehold.co/20x20/000000/ffffff?text=NIT" alt="NIT Logo"> NIT Warangal</p>
+              <div class="paper-actions">
+                <button class="action-btn like-btn"><i class="fas fa-heart"></i> <span class="like-count">980</span></button>
+                <button class="action-btn bookmark-btn"><i class="fas fa-bookmark"></i></button>
+                <button class="action-btn share-btn"><i class="fas fa-share-alt"></i></button>
+              </div>
+              <div class="paper-comments">
+                <p><strong>Comments:</strong> "Mind-blowing research!"</p>
+              </div>
+            </div>
+            <div class="paper-card">
+              <h3>Sustainable Energy Solutions</h3>
+              <p>Author: Dr. C. Reddy</p>
+              <p class="institution-badge"><img src="https://placehold.co/20x20/000000/ffffff?text=BITS" alt="BITS Logo"> BITS Pilani</p>
+              <div class="paper-actions">
+                <button class="action-btn like-btn"><i class="fas fa-heart"></i> <span class="like-count">1.5K</span></button>
+                <button class="action-btn bookmark-btn"><i class="fas fa-bookmark"></i></button>
+                <button class="action-btn share-btn"><i class="fas fa-share-alt"></i></button>
+              </div>
+              <div class="paper-comments">
+                <p><strong>Comments:</strong> "Crucial for our future."</p>
+              </div>
+            </div>
+            <div class="paper-card">
+              <h3>Advancements in Space Exploration</h3>
+              <p>Author: J. Verma</p>
+              <p class="institution-badge"><img src="https://placehold.co/20x20/000000/ffffff?text=ISRO" alt="ISRO Logo"> ISRO</p>
+              <div class="paper-actions">
+                <button class="action-btn like-btn"><i class="fas fa-heart"></i> <span class="like-count">850</span></button>
+                <button class="action-btn bookmark-btn"><i class="fas fa-bookmark"></i></button>
+                <button class="action-btn share-btn"><i class="fas fa-share-alt"></i></button>
+              </div>
+              <div class="paper-comments">
+                <p><strong>Comments:</strong> "Inspiring!"</p>
+              </div>
+            </div>
+            <!-- More paper cards can be added here -->
+          </div>
+          <button class="carousel-arrow right" id="trending-right"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </section>
+
+      <!-- Top Authors Slider (existing) -->
+      <section id="top-authors" class="carousel-section">
+        <h2><i class="fas fa-crown"></i> Top Authors</h2>
+        <div class="carousel-wrapper">
+          <button class="carousel-arrow left" id="authors-left"><i class="fas fa-chevron-left"></i></button>
+          <div class="carousel-container" id="topAuthorsCarousel">
+            <!-- Example Author Cards -->
+            <div class="author-card">
+              <img src="https://placehold.co/80x80/673ab7/ffffff?text=AS" alt="Author Avatar" class="author-avatar">
+              <h3>Dr. Anand Sharma</h3>
+              <p>Specialization: AI, Machine Learning</p>
+              <p>Institution: IIT Delhi</p>
+              <button class="view-profile-btn"><i class="fas fa-eye"></i> View Profile</button>
+            </div>
+            <div class="author-card">
+              <img src="https://placehold.co/80x80/009688/ffffff?text=BS" alt="Author Avatar" class="author-avatar">
+              <h3>Prof. Bhavna Singh</h3>
+              <p>Specialization: Quantum Physics</p>
+              <p>Institution: NIT Warangal</p>
+              <button class="view-profile-btn"><i class="fas fa-eye"></i> View Profile</button>
+            </div>
+            <div class="author-card">
+              <img src="https://placehold.co/80x80/ff5722/ffffff?text=CR" alt="Author Avatar" class="author-avatar">
+              <h3>Dr. Chaitanya Reddy</h3>
+              <p>Specialization: Renewable Energy</p>
+              <p>Institution: BITS Pilani</p>
+              <button class="view-profile-btn"><i class="fas fa-eye"></i> View Profile</button>
+            </div>
+            <div class="author-card">
+              <img src="https://placehold.co/80x80/2196f3/ffffff?text=JV" alt="Author Avatar" class="author-avatar">
+              <h3>Jaya Verma</h3>
+              <p>Specialization: Astrophysics</p>
+              <p>Institution: ISRO</p>
+              <button class="view-profile-btn"><i class="fas fa-eye"></i> View Profile</button>
+            </div>
+            <!-- More author cards -->
+          </div>
+          <button class="carousel-arrow right" id="authors-right"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </section>
+
+      <section class="workflow-cards">
+        <h2><i class="fas fa-cogs"></i> Build Your Perfect Workflow</h2>
+        <div class="card-grid">
+          <div class="tile"><i class="fas fa-robot"></i> AI Chatbot</div>
+          <div class="tile"><i class="fas fa-microscope"></i> AI Research Helper</div>
+          <div class="tile"><i class="fas fa-tasks"></i> Smart Checklist</div>
+        </div>
+      </section>
+
+      <section class="feature-icons">
+        <h2><i class="fas fa-question-circle"></i> Why ResearchBook?</h2>
+        <div class="icons">
+          <div class="icon-animate">🚀 Speed</div>
+          <div class="icon-animate">🔒 Privacy</div>
+          <div class="icon-animate">📚 Knowledge</div>
+        </div>
+      </section>
+    </section>
+
+    <!-- Highlights Section -->
+    <section id="highlights" class="content-section">
+      <h2><i class="fas fa-star"></i> Highlights: Why ResearchBook?</h2>
+      <div class="info-card">
+        <h3>Accelerate Your Research Journey</h3>
+        <p>ResearchBook provides cutting-edge tools and a vast community to help you publish, discover, and track your academic impact more efficiently than ever before.</p>
+      </div>
+      <div class="info-card">
+        <h3>Unmatched Privacy and Security</h3>
+        <p>We prioritize your intellectual property with tamper-proof verification and end-to-end encryption, ensuring your work is safe and secure.</p>
+      </div>
+       <div class="info-card">
+        <h3>AI-Powered Insights at Your Fingertips</h3>
+        <p>From suggesting relevant citations to generating tags and improving your paper's clarity, our AI assistant is here to supercharge your research workflow.</p>
+      </div>
+    </section>
+
+    <!-- Explore Section (existing) -->
+    <section id="explore" class="content-section">
+      <h2><i class="fas fa-compass"></i> Explore Research</h2>
+      <div class="category-tabs">
+        <button class="tab-btn active" data-category="all">All</button>
+        <button class="tab-btn" data-category="ai">AI & ML</button>
+        <button class="tab-btn" data-category="medicine">Medicine</button>
+        <button class="tab-btn" data-category="space">Space</button>
+        <button class="tab-btn" data-category="environment">Environment</button>
+        <!-- Add more categories as needed -->
+      </div>
+      <div class="explore-papers-grid">
+        <!-- Papers will be loaded here based on category filter -->
+        <!-- Example paper for explore section, similar to trending but with more details for filtering -->
+        <div class="paper-card explore-card" data-category="ai">
+          <h3>Advanced Neural Networks for Image Recognition</h3>
+          <p>Author: K. Varma</p>
+          <p class="institution-badge"><img src="https://placehold.co/20x20/000000/ffffff?text=IIIT" alt="IIIT Logo"> IIIT Hyderabad</p>
+          <p>Abstract: This paper explores novel architectures for deep neural networks achieving state-of-the-art results in image recognition tasks...</p>
+          <div class="paper-actions">
+            <button class="action-btn like-btn"><i class="fas fa-heart"></i> <span class="like-count">2.1K</span></button>
+            <button class="action-btn bookmark-btn"><i class="fas fa-bookmark"></i></button>
+            <button class="action-btn share-btn"><i class="fas fa-share-alt"></i></button>
+          </div>
+          <div class="paper-comments">
+            <h4>Comments:</h4>
+            <p><strong>User123:</strong> "Fantastic work, very clear explanations."</p>
+          </div>
+        </div>
+        <div class="paper-card explore-card" data-category="medicine">
+          <h3>CRISPR-Cas9 Gene Editing for Inherited Diseases</h3>
+          <p>Author: Dr. L. Kumar</p>
+          <p class="institution-badge"><img src="https://placehold.co/20x20/000000/ffffff?text=AIIMS" alt="AIIMS Logo"> AIIMS Delhi</p>
+          <p>Abstract: Investigating the efficacy and safety of CRISPR-Cas9 in correcting genetic mutations responsible for various inherited disorders...</p>
+          <div class="paper-actions">
+            <button class="action-btn like-btn"><i class="fas fa-heart"></i> <span class="like-count">1.8K</span></button>
+            <button class="action-btn bookmark-btn"><i class="fas fa-bookmark"></i></button>
+            <button class="action-btn share-btn"><i class="fas fa-share-alt"></i></button>
+          </div>
+          <div class="paper-comments">
+            <h4>Comments:</h4>
+            <p><strong>BioMedFan:</strong> "Revolutionary potential!"</p>
+          </div>
+        </div>
+        <div class="paper-card explore-card" data-category="space">
+          <h3>Dark Matter Detection using Next-Gen Telescopes</h3>
+          <p>Author: Prof. M. Devi</p>
+          <p class="institution-badge"><img src="https://placehold.co/20x20/000000/ffffff?text=TIFR" alt="TIFR Logo"> TIFR Mumbai</p>
+          <p>Abstract: A detailed study on the latest methods and technologies employed in the search for dark matter, utilizing advanced telescopic observations...</p>
+          <div class="paper-actions">
+            <button class="action-btn like-btn"><i class="fas fa-heart"></i> <span class="like-count">1.1K</span></button>
+            <button class="action-btn bookmark-btn"><i class="fas fa-bookmark"></i></button>
+            <button class="action-btn share-btn"><i class="fas fa-share-alt"></i></button>
+          </div>
+          <div class="paper-comments">
+            <h4>Comments:</h4>
+            <p><strong>AstroNerd:</strong> "Fascinating insights into the cosmic unknown."</p>
+          </div>
+        </div>
+        <div class="paper-card explore-card" data-category="environment">
+          <h3>Mitigating Plastic Pollution in Marine Ecosystems</h3>
+          <p>Author: N. Sharma</p>
+          <p class="institution-badge"><img src="https://placehold.co/20x20/000000/ffffff?text=NIOT" alt="NIOT Logo"> NIOT Chennai</p>
+          <p>Abstract: This research proposes innovative strategies and technologies for reducing plastic waste and its impact on marine life...</p>
+          <div class="paper-actions">
+            <button class="action-btn like-btn"><i class="fas fa-heart"></i> <span class="like-count">1.6K</span></button>
+            <button class="action-btn bookmark-btn"><i class="fas fa-bookmark"></i></button>
+            <button class="action-btn share-btn"><i class="fas fa-share-alt"></i></button>
+          </div>
+          <div class="paper-comments">
+            <h4>Comments:</h4>
+            <p><strong>EcoWarrior:</strong> "Essential work for our planet!"</p>
+          </div>
+        </div>
+        <!-- More explore cards -->
+      </div>
+    </section>
+
+    <!-- Recommended For You (AI-curated) Section -->
+    <section id="ai-recommended" class="content-section">
+      <h2><i class="fas fa-robot"></i> Recommended For You (AI-curated)</h2>
+      <p>Our intelligent AI suggests papers tailored to your research interests.</p>
+      <div class="explore-papers-grid">
+        <div class="paper-card">
+          <h3>Personalized Medicine & Genomics</h3>
+          <p>Author: Dr. S. Rao</p>
+          <p class="institution-badge"><img src="https://placehold.co/20x20/000000/ffffff?text=IISc" alt="IISc Logo"> IISc Bangalore</p>
+          <p>Abstract: Exploring advancements in personalized medicine through genomic sequencing and data analysis...</p>
+        </div>
+        <div class="paper-card">
+          <h3>Cybersecurity Threats in IoT Networks</h3>
+          <p>Author: P. Gupta</p>
+          <p class="institution-badge"><img src="https://placehold.co/20x20/000000/ffffff?text=CDAC" alt="CDAC Logo"> CDAC Mumbai</p>
+          <p>Abstract: An analysis of emerging cybersecurity vulnerabilities and mitigation strategies in the context of interconnected IoT devices...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Browse by Field / Institution / Author Section -->
+    <section id="browse-filters" class="content-section">
+      <h2><i class="fas fa-filter"></i> Browse & Filter</h2>
+      <p>Refine your search by specific fields, institutions, or authors.</p>
+      <div class="filter-options-grid">
+        <button class="filter-btn"><i class="fas fa-flask"></i> By Field (e.g., Physics, Chemistry)</button>
+        <button class="filter-btn"><i class="fas fa-building"></i> By Institution (e.g., IIT, AIIMS)</button>
+        <button class="filter-btn"><i class="fas fa-user-friends"></i> By Author (e.g., Dr. Sharma)</button>
+      </div>
+    </section>
+
+    <!-- Notifications Section (existing) -->
+    <section id="notifications" class="content-section">
+      <h2><i class="fas fa-bell"></i> Notifications</h2>
+      <div class="notification-list">
+        <div class="notification-item">
+          <p><i class="fas fa-star"></i> Your paper "Deep Learning for Climate Modeling" received 5 new likes!</p>
+          <span class="notification-time">2 hours ago</span>
+        </div>
+        <div class="notification-item">
+          <p><i class="fas fa-comment"></i> "Quantum Entanglement Explained" has a new comment from 'PhysicsFan'.</p>
+          <span class="notification-time">Yesterday</span>
+        </div>
+        <div class="notification-item">
+          <p><i class="fas fa-user-plus"></i> Dr. Priya Singh sent you a collaboration request.</p>
+          <span class="notification-time">3 days ago</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Privacy & Safety Section -->
+    <section id="privacy-safety" class="content-section">
+      <h2><i class="fas fa-shield-alt"></i> Privacy & Safety</h2>
+      <div class="info-card">
+        <h3>Tamper-Proof Verification</h3>
+        <p>Every paper uploaded receives a unique blockchain timestamp, ensuring the integrity and authenticity of your work.</p>
+      </div>
+      <div class="info-card">
+        <h3>End-to-End Encryption</h3>
+        <p>All communications and private data are secured with industry-standard end-to-end encryption for maximum confidentiality.</p>
+      </div>
+      <div class="info-card">
+        <h3>PhD Harassment & Whistleblower Helpdesk</h3>
+        <p>A confidential portal to report harassment or misuse within the academic community. We prioritize your well-being.</p>
+        <button class="action-btn blue-btn" data-action="open-helpdesk"><i class="fas fa-headset"></i> Open Helpdesk</button>
+      </div>
+       <div class="info-card">
+        <h3>Confidential Submission Option</h3>
+        <p>Submit sensitive research with an option for restricted visibility, allowing you to control who can view your work.</p>
+      </div>
+      <div class="info-card">
+        <h3>Report Harassment / Misuse</h3>
+        <p>If you encounter any inappropriate content or behavior, please report it immediately.</p>
+        <button class="action-btn red-btn" data-action="report-incident"><i class="fas fa-flag"></i> Report Incident</button>
+      </div>
+    </section>
+
+    <!-- AI Assistant Section -->
+    <section id="ai-assistant" class="content-section">
+      <h2><i class="fas fa-brain"></i> AI Assistant</h2>
+      <div class="info-card">
+        <h3>Research Improver Bot</h3>
+        <p>Upload your draft, and our AI will suggest grammatical corrections, stylistic improvements, and clarity enhancements.</p>
+        <button class="action-btn green-btn" data-action="ai-improver-demo"><i class="fas fa-magic"></i> Try Improver</button>
+      </div>
+      <div class="info-card">
+        <h3>Related Work Generator</h3>
+        <p>Based on your abstract, the AI can suggest highly relevant research papers and citations.</p>
+        <button class="action-btn green-btn" data-action="ai-related-demo"><i class="fas fa-link"></i> Get Related Work</button>
+      </div>
+       <div class="info-card">
+        <h3>Collaboration Suggestions</h3>
+        <p>Find potential collaborators with complementary research interests from our vast network.</p>
+        <button class="action-btn green-btn" data-action="ai-collaborate-demo"><i class="fas fa-user-plus"></i> Find Collaborators</button>
+      </div>
+      <div class="info-card">
+        <h3>Translate Abstract</h3>
+        <p>Translate your abstract into multiple languages to reach a global audience.</p>
+        <button class="action-btn green-btn" data-action="ai-translate-demo"><i class="fas fa-language"></i> Translate</button>
+      </div>
+      <div class="info-card">
+        <h3>Reference Generator (APA, MLA, etc.)</h3>
+        <p>Automatically generate citations in various academic styles.</p>
+        <button class="action-btn green-btn" data-action="ai-reference-demo"><i class="fas fa-file-invoice"></i> Generate Reference</button>
+      </div>
+    </section>
+
+    <!-- Collaborate Section -->
+    <section id="collaborate" class="content-section">
+      <h2><i class="fas fa-users"></i> Collaborate</h2>
+      <div class="info-card">
+        <h3>Join Projects</h3>
+        <p>Discover ongoing research projects and request to join teams that align with your expertise.</p>
+        <button class="action-btn purple-btn" data-action="view-projects"><i class="fas fa-project-diagram"></i> View Projects</button>
+      </div>
+      <div class="info-card">
+        <h3>Invite Collaborators</h3>
+        <p>Easily invite colleagues and researchers to work together on your papers and projects.</p>
+        <button class="action-btn purple-btn" data-action="send-invites"><i class="fas fa-user-plus"></i> Send Invites</button>
+      </div>
+      <div class="info-card">
+        <h3>Interdisciplinary Hubs</h3>
+        <p>Explore specialized communities like HealthTech or AI in Bioinformatics to connect with diverse experts.</p>
+        <button class="action-btn purple-btn" data-action="explore-hubs"><i class="fas fa-cubes"></i> Explore Hubs</button>
+      </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="content-section">
+      <h2><i class="fas fa-chart-line"></i> Dashboard</h2>
+      <div class="info-card">
+        <h3>Impact Tracker</h3>
+        <p>Monitor your paper's performance with real-time views, downloads, and citation counts.</p>
+        <img src="https://placehold.co/400x200/e0f2f7/2196f3?text=Impact+Chart" alt="Impact Chart Placeholder" class="placeholder-img">
+      </div>
+      <div class="info-card">
+        <h3>Engagement Analytics</h3>
+        <p>Understand how users interact with your content, including likes and comments over time.</p>
+        <img src="https://placehold.co/400x200/e8f5e9/4caf50?text=Engagement+Graph" alt="Engagement Graph Placeholder" class="placeholder-img">
+      </div>
+      <div class="info-card">
+        <h3>Follower Count</h3>
+        <p class="large-text">Followers: <span class="highlight-text">5,321</span></p>
+      </div>
+    </section>
+
+    <!-- My Profile Section (existing) -->
+    <section id="profile" class="content-section">
+      <h2><i class="fas fa-user"></i> My Profile</h2>
+      <div class="profile-details">
+        <img src="https://placehold.co/100x100/3949ab/ffffff?text=U" alt="Profile Picture" class="profile-picture">
+        <h3>User Name (Logged In)</h3>
+        <p><strong>Bio:</strong> Passionate researcher in AI and robotics, dedicated to open science initiatives.</p>
+        <p><strong>Research Interests:</strong> Artificial Intelligence, Robotics, Machine Learning, Data Science.</p>
+        <div class="profile-stats">
+          <p><strong>Papers Uploaded:</strong> 5</p>
+          <p><strong>Total Likes:</strong> 15.3K</p>
+          <p><strong>Views:</strong> 50K</p>
+        </div>
+        <button class="edit-profile-btn"><i class="fas fa-edit"></i> Edit Profile</button>
+      </div>
+
+      <h3>My Papers</h3>
+      <div class="my-papers-list">
+        <!-- Example of user's uploaded papers -->
+        <div class="paper-card">
+          <h3>Robotics in Autonomous Navigation</h3>
+          <p>Views: 10K | Likes: 2.5K | Comments: 50</p>
+        </div>
+        <div class="paper-card">
+          <h3>Ethical AI in Decision Making</h3>
+          <p>Views: 8K | Likes: 1.8K | Comments: 30</p>
+        </div>
+      </div>
+
+      <h3>Collaboration Requests</h3>
+      <div class="collaboration-requests">
+        <div class="request-item">
+          <p>Request from Dr. Rahul Gupta on "Blockchain for Secure Data".</p>
+          <button class="accept-btn"><i class="fas fa-check"></i> Accept</button>
+          <button class="reject-btn"><i class="fas fa-times"></i> Reject</button>
+        </div>
+      </div>
+
+      <div class="analytics-section">
+        <h3>Analytics</h3>
+        <p>View counts, like trends, and more detailed analytics coming soon!</p>
+      </div>
+
+      <div class="profile-sub-section">
+        <h3>My Collaborators</h3>
+        <p>Manage your research collaborations.</p>
+        <button class="action-btn" data-action="manage-collaborators"><i class="fas fa-users"></i> Manage Collaborators</button>
+      </div>
+      <div class="profile-sub-section">
+        <h3>Certificates & Credentials</h3>
+        <p>Showcase your academic achievements and verified credentials.</p>
+        <button class="action-btn" data-action="view-certificates"><i class="fas fa-certificate"></i> View Certificates</button>
+      </div>
+      <div class="profile-sub-section">
+        <h3>Theme & UI Customization</h3>
+        <p>Personalize your ResearchBook experience.</p>
+        <button class="action-btn" data-action="open-theme-settings"><i class="fas fa-palette"></i> Customize Theme</button>
+      </div>
+    </section>
+
+    <!-- Institutions Section -->
+    <section id="institutions" class="content-section">
+      <h2><i class="fas fa-university"></i> Institutions</h2>
+      <div class="info-card">
+        <h3>Top Institutions List</h3>
+        <p>Explore leading research institutions globally and in India.</p>
+        <ul class="institution-list">
+          <li><img src="https://placehold.co/30x30/000000/ffffff?text=IIT" alt="IIT Logo"> IIT Delhi</li>
+          <li><img src="https://placehold.co/30x30/000000/ffffff?text=IISc" alt="IISc Logo"> IISc Bangalore</li>
+          <li><img src="https://placehold.co/30x30/000000/ffffff?text=AIIMS" alt="AIIMS Logo"> AIIMS Delhi</li>
+          <li><img src="https://placehold.co/30x30/000000/ffffff?text=TIFR" alt="TIFR Logo"> TIFR Mumbai</li>
+          <!-- Add more logos and links here -->
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Your College / University Page</h3>
+        <p>Find research and connect with peers from your own institution.</p>
+        <button class="action-btn blue-btn" data-action="go-to-my-college"><i class="fas fa-graduation-cap"></i> My Institution Page</button>
+      </div>
+      <div class="info-card">
+        <h3>Verified Clubs / Departments / IEDC Logos</h3>
+        <p>Discover official academic clubs, departments, and innovation centers.</p>
+        <div class="club-logos">
+          <img src="https://placehold.co/40x40/007bff/ffffff?text=CSD" alt="CS Dept Logo">
+          <img src="https://placehold.co/40x40/28a745/ffffff?text=BIO" alt="Bio Dept Logo">
+          <img src="https://placehold.co/40x40/6f42c1/ffffff?text=IEDC" alt="IEDC Logo">
+        </div>
+      </div>
+    </section>
+
+    <!-- Announcements & Events Section -->
+    <section id="announcements" class="content-section">
+      <h2><i class="fas fa-bullhorn"></i> Announcements & Events</h2>
+      <div class="event-card">
+        <h3>Research Competitions</h3>
+        <p>Participate in exciting research challenges and win prizes!</p>
+        <span><i class="fas fa-calendar-alt"></i> Deadline: August 15, 2025</span>
+        <button class="action-btn orange-btn" data-action="view-competitions"><i class="fas fa-trophy"></i> View Competitions</button>
+      </div>
+      <div class="event-card">
+        <h3>Call for Papers: AI in Sustainable Tech</h3>
+        <p>Submit your research for our upcoming special issue.</p>
+        <span><i class="fas fa-calendar-alt"></i> Submission closes: September 30, 2025</span>
+        <button class="action-btn orange-btn" data-action="view-cfps"><i class="fas fa-file-contract"></i> View Call</button>
+      </div>
+      <div class="event-card">
+        <h3>Webinar: Quantum Computing Basics</h3>
+        <p>Join experts for a deep dive into the fundamentals of quantum computing.</p>
+        <span><i class="fas fa-calendar-alt"></i> Date: July 20, 2025 | <i class="fas fa-clock"></i> Time: 3:00 PM IST</span>
+        <button class="action-btn orange-btn" data-action="register-webinar"><i class="fas fa-globe"></i> Register Now</button>
+      </div>
+    </section>
+
+    <!-- Settings Section -->
+    <section id="settings" class="content-section">
+      <h2><i class="fas fa-cog"></i> Settings</h2>
+      <div class="setting-option">
+        <h3>Theme</h3>
+        <p>Customize the look and feel of ResearchBook.</p>
+        <button class="action-btn" data-action="open-theme-settings-sidebar"><i class="fas fa-palette"></i> Change Theme</button>
+      </div>
+      <div class="setting-option">
+        <h3>Language</h3>
+        <p>Select your preferred language.</p>
+        <button class="action-btn" data-action="change-language"><i class="fas fa-language"></i> English <i class="fas fa-chevron-down"></i></button>
+      </div>
+      <div class="setting-option">
+        <h3>Notification Settings</h3>
+        <p>Manage email and in-app notifications.</p>
+        <button class="action-btn" data-action="manage-notifications"><i class="fas fa-bell"></i> Manage Notifications</button>
+      </div>
+      <div class="setting-option">
+        <h3>Account & Security</h3>
+        <p>Update your password, email, and security preferences.</p>
+        <button class="action-btn" data-action="account-security-settings"><i class="fas fa-user-shield"></i> Security Settings</button>
+      </div>
+      <div class="setting-option">
+        <h3>Logout</h3>
+        <p>Sign out of your ResearchBook account.</p>
+        <button class="action-btn red-btn" id="settingsLogoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </div>
+    </section>
+
+  </main>
+
+  
+
+  
+
+  <div class="sticky-assistant" id="stickyAssistant">Ask ResearchBook AI <i class="fas fa-comments"></i></div>
+
+  <footer>
+    <p>&copy; 2025 ResearchBook. All rights reserved.</p>
+  </footer>
+</body>
+</html>
